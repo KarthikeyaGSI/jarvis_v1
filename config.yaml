@@ -1,0 +1,103 @@
+# Marketingkolabs - Local Voice Agent Configuration
+# MIT License
+
+# Speech-to-Text (STT) Configuration
+stt:
+  engine: "faster-whisper"
+  model_size: "tiny"  # tiny for sub-2s latency, base for accuracy
+  language: "en"
+  device: "cpu"
+  compute_type: "int8"
+  preload: true  # Preload model at startup for faster first response
+
+# Intent Parser (Local LLM) Configuration
+intent_parser:
+  engine: "ollama"
+  model: "phi3:mini"  # Fast, efficient for intent parsing
+  base_url: "http://localhost:11434"
+  timeout: 15  # seconds - increased for slower systems
+  system_prompt: |
+    Parse this voice command into a JSON action: { "skill": "", "action": "", "params": {} }
+    Return ONLY valid JSON. No explanation.
+    Available skills: text_editor, file_ops, app_control, clipboard, browser, macros
+    Browser skill supports: search, compare_products, research_product, open_url, open_browser
+    Context: User may say "that", "it", "the file" to refer to previous items.
+  confirm_actions: ["delete_file", "move_file", "close_app"]
+
+# Text-to-Speech (TTS) Configuration
+tts:
+  engine: "piper"
+  voice: "en_US-amy-medium"
+  speed: 1.2  # Slightly faster for quick confirmations
+  piper_path: "piper"
+  confirm_prompt: "Confirm? Say yes or no."
+
+# Wake Word / Trigger Configuration
+trigger:
+  mode: "hotkey"  # Options: hotkey, porcupine, always-listening, wake_word
+  hotkey: "ctrl+shift+space"
+  porcupine:
+    enabled: false
+    access_key: ""  # Get free key from Picovoice Console
+    keyword_paths: []  # Custom wake word model paths
+    sensitivities: [0.5]
+
+# Audio Configuration
+audio:
+  sample_rate: 16000
+  channels: 1
+  chunk_size: 1024
+  input_device: 12  # AirBass Earbuds mic (change to 1 or 6 if needed)
+  fallback_to_pyaudio: true
+
+# Skill Plugin Configuration
+skills:
+  enabled:
+    - text_editor
+    - file_ops
+    - app_control
+    - clipboard
+    - browser
+    - system
+    - macros
+  plugins_path: "./skills"
+  confirm_required:
+    file_ops: ["delete_file", "move_file"]
+    app_control: ["close_app"]
+
+# Session Context Configuration
+context:
+  enabled: true
+  track:
+    - last_file
+    - last_app
+    - last_url
+    - last_product
+    - last_browser
+  max_history: 10
+
+# Browser Configuration
+browser:
+  default_browser: "chrome"  # auto-detected if not specified
+  default_engine: "google"
+  search_engines:
+    google: "https://www.google.com/search?q={}"
+    bing: "https://www.bing.com/search?q={}"
+    duckduckgo: "https://duckduckgo.com/?q={}"
+    amazon: "https://www.amazon.com/s?k={}"
+    ebay: "https://www.ebay.com/sch/i.html?_nkw={}"
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "marketingkolabs.log"
+
+# Performance Targets
+performance:
+  target_latency_ms: 2000
+  optimize_for_latency: true
+
+# Safety Configuration
+safety:
+  require_confirm_timeout: 5
+  block_dangerous_commands: true

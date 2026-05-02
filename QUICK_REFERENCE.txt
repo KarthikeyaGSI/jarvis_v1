@@ -1,0 +1,61 @@
+===============================================
+  MARKETINGKOLABS - QUICK REFERENCE
+  100% Free | No Admin | 24/7 Local AI
+===============================================
+
+FILES IN THIS FOLDER:
+- autonomous_agent.py    <- Main AI agent (START HERE)
+- api_server.py          <- Web UI server (optional)
+- RUN_NOW.bat            <- Double-click to start everything
+- portable/               <- No-install portable setup
+
+---
+
+NO-ADMIN PORTABLE SETUP (Fully Automatic):
+1. Open: portable\1. Download Portable Tools.bat
+2. Wait for downloads (5-10 mins first time)
+3. Run: portable\2. Start Marketingkolabs.bat
+4. Chrome opens automatically!
+
+---
+
+MANUAL SETUP (If you have Python):
+1. Install Ollama: https://ollama.com/download
+2. Run: ollama pull phi3:mini
+3. Install packages: pip install --user requests pyperclip
+4. Run: python autonomous_agent.py
+5. Type commands like: "What time is it?"
+
+---
+
+COMMANDS TO TRY:
+- "Hello, what can you do?"
+- "Search for Python tutorials"
+- "Open calculator"
+- "What time is it?"
+- "Remember that I like dark mode"
+- "What did I ask you to remember?"
+
+---
+
+UI MODE (Premium Web Interface):
+1. Run: api_server.py
+2. Open: http://localhost:3000
+3. Beautiful glassmorphism UI with animations!
+
+---
+
+TROUBLESHOOTING:
+- "Ollama not found" -> Download from ollama.com
+- "Python not found" -> Use portable\ folder
+- "No module" -> pip install --user <module>
+- Voice not working -> Use text mode (type commands)
+
+---
+
+COST: $0.00 Forever
+REQUIREMENTS: Windows 10/11, 5GB space, Microphone
+ADMIN NEEDED: NO!
+API KEYS NEEDED: NONE!
+
+===============================================

@@ -1,0 +1,17 @@
+# Marketingkolabs - 100% Free Local Requirements
+# NO PAID APIS - Everything runs locally!
+
+# Core dependencies (all free)
+requests>=2.31.0
+pyperclip>=1.8.2
+
+# For the premium UI (optional - can run without)
+# flask>=3.0.0
+# flask-socketio>=5.3.0
+
+# System monitoring (optional)
+# psutil>=5.9.0
+
+# That's it! Ollama is downloaded separately (free)
+# Get Ollama: https://ollama.com/download
+# Then: ollama pull phi3:mini
