@@ -1,0 +1,67 @@
+[
+  {
+    "id": 0,
+    "type": "reminder",
+    "command": "test reminder",
+    "message": "Test every 5 seconds",
+    "created_at": "2026-05-04T09:46:25.716631",
+    "run_at": null,
+    "interval": 5,
+    "repeat_count": null,
+    "executions": 0,
+    "last_run": null,
+    "active": true
+  },
+  {
+    "id": 1,
+    "type": "reminder",
+    "command": "10 second reminder",
+    "message": "This is a test",
+    "created_at": "2026-05-04T09:46:25.717397",
+    "run_at": "2026-05-04T09:46:35.717390",
+    "interval": null,
+    "repeat_count": null,
+    "executions": 0,
+    "last_run": null,
+    "active": true
+  },
+  {
+    "id": 2,
+    "type": "reminder",
+    "command": "test",
+    "message": "Test reminder",
+    "created_at": "2026-05-04T10:34:24.378151",
+    "run_at": "2026-05-04T10:34:34.378136",
+    "interval": null,
+    "repeat_count": null,
+    "executions": 0,
+    "last_run": null,
+    "active": true
+  },
+  {
+    "id": 3,
+    "type": "reminder",
+    "command": "check email",
+    "message": "Check email now",
+    "created_at": "2026-05-04T10:35:50.354244",
+    "run_at": "2026-05-04T10:36:20.354236",
+    "interval": null,
+    "repeat_count": null,
+    "executions": 0,
+    "last_run": null,
+    "active": true
+  },
+  {
+    "id": 4,
+    "type": "recurring",
+    "command": "Battery",
+    "message": "",
+    "created_at": "2026-05-04T10:35:50.354943",
+    "run_at": null,
+    "interval": 60,
+    "repeat_count": null,
+    "executions": 0,
+    "last_run": null,
+    "active": true
+  }
+]

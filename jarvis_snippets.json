@@ -1,0 +1,12 @@
+{
+  "meeting": {
+    "cue": "meeting",
+    "text": "I have a meeting scheduled for 3 PM today.",
+    "created_at": "2026-05-04T11:21:24.292266"
+  },
+  "test": {
+    "cue": "test",
+    "text": "This is a test snippet.",
+    "created_at": "2026-05-04T11:29:23.226262"
+  }
+}
