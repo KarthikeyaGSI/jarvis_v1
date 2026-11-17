@@ -1,266 +1,174 @@
-# Marketingkolabs - 24/7 Autonomous Local Voice Agent
+# MarketingKo Labs: Jarvis v1
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org)
+**Fully autonomous, 24/7 local voice agent and desktop automation system.**
 
-A **fully autonomous, 24/7 local voice agent** that works for you around the clock. No cloud, no API calls, no dependencies on external services. Your personal AI assistant that runs locally on your machine.
-
-## Key Features
-
-🤖 **24/7 Autonomous Operation** - Works continuously in background, proactive suggestions
-🎙️ **Sub-2s Voice Response** - Whisper tiny + Phi-3 Mini for instant responses
-🧠 **Persistent Memory** - Remembers conversations, preferences, and patterns across sessions
-🔒 **100% Local** - No data leaves your machine, complete privacy
-🎨 **Premium UI** - GSAP animations, Framer Motion, glassmorphism design
-⌨️ **Customizable Shortcuts** - Every shortcut configurable via settings UI
-📋 **Voice-to-Fill** - Say text, auto-fill browser forms and input fields
-🌐 **Browser Automation** - Search, compare products, research, extract data
-🔧 **Plugin System** - Community-contributed skills, hot-reload support
-🖥️ **System Tray** - Runs quietly in background, always available
-🚀 **Auto-Start** - Launches on system boot (Windows/Linux/macOS)
-🔗 **P2P Sync** - Sync across devices via local network (experimental)
-
-## Architecture
-
-```
-┌─────────────────┐
-│                  24/7 Autonomous Loop                   │
-│  ┌──────────┐    ┌───────────┐    ┌──────────────┐  │
-│  │ Monitor  │───▶│ Suggest  │───▶│ Execute     │  │
-│  │ System   │    │ Actions  │    │ Proactively │  │
-│  └──────────┘    └───────────┘    └──────────────┘  │
-└─────────────────┘
-         ▲                    │
-         │                    ▼
-┌─────────────────┐    ┌───────────────┐
-│  Voice Input   │    │  Persistent   │
-│  (Whisper)    │───▶│  Memory DB   │
-└─────────────────┘    └───────────────┘
-         │                    ▲
-         ▼                    │
-┌─────────────────┐          │
-│ Intent Parser  │          │
-│ (Phi-3 Mini)  │──────────┘
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  Skill Router  │
-│  (Plugins)     │
-└─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│  TTS Confirm   │
-│  (Piper)       │
-└─────────────────┘
-```
-
-## Quick Start
-
-### 1. Prerequisites
-
-```bash
-# Install Ollama for local LLM
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull phi3:mini
-
-# Install Piper TTS
-# Linux: snap install piper
-# Windows: Download from https://github.com/rhasspy/piper
-```
-
-### 2. Install Dependencies
-
-```bash
-cd marketingkolabs
-pip install -r requirements.txt
-```
-
-### 3. Run Modes
-
-**Interactive Mode (with Premium UI):**
-```bash
-python agent.py --mode interactive
-# Access UI at http://localhost:3000
-```
-
-**Service Mode (24/7 Background):**
-```bash
-python agent.py --mode service
-# Runs in background, accessible via system tray
-```
-
-**Enable Auto-Start:**
-```bash
-python agent.py --enable-autostart
-```
-
-## Voice Commands
-
-### Core Capabilities
-- **"Search for [product]"** - Web search with auto-opened tabs
-- **"Compare [A] and [B]"** - Side-by-side product comparison
-- **"Research [product]"** - Reviews, specs, alternatives
-- **"Open [app]"** - Launch any application
-- **"Cut lines 3-5"** - Text editing by voice
-- **"Copy that" / "Paste here"** - Clipboard control
-- **"Take a screenshot"** - System automation
-
-### Context-Aware Commands
-- "Open notepad" → "Close **that**" (understands references)
-- "Search headphones" → "Compare **it** with Sony" (remembers context)
-- "Open file.txt" → "Delete **that file**" (tracks last file)
-
-### Custom Macros
-Create voice shortcuts that chain multiple actions:
-```json
-{
-  "morning routine": {
-    "description": "Start my day",
-    "actions": [
-      {"skill": "app_control", "action": "open_app", "params": {"app_name": "chrome"}},
-      {"skill": "browser", "action": "open_url", "params": {"url": "gmail.com"}}
-    ]
-  }
-}
-```
-Activate with: **"Run morning routine"**
-
-## Global Shortcuts (Customizable)
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl+Shift+V` | Toggle voice mode |
-| `Ctrl+Shift+F` | Voice-to-fill (forms) |
-| `Ctrl+Shift+S` | Open settings |
-| `Ctrl+Shift+R` | Quick research (selected text) |
-| `Ctrl+Shift+C` | Clear clipboard |
-
-*All shortcuts customizable via Settings UI*
-
-## Premium UI Features
-
-- **GSAP + Framer Motion** animations
-- **Glassmorphism** design with backdrop blur
-- **Gradient text** with Inter + Playfair Display fonts
-- **Animated voice orb** with pulsing rings
-- **Real-time status** panel
-- **Settings tab** with shortcut customization
-- **Dark theme** optimized for 24/7 use
-
-## Plugin System
-
-Add custom skills in `/skills/` directory:
-
-```python
-from skills import BaseSkill
-
-class Skill(BaseSkill):
-    def execute(self, action, params):
-        # Your code here
-        return {"success": True, "message": "Done"}
-
-    def get_actions(self):
-        return ["your_action"]
-```
-
-The agent auto-discovers and loads new skills on startup.
-
-## Configuration
-
-Edit `config.yaml` for:
-- STT model size (tiny/base/small for speed/accuracy tradeoff)
-- LLM model selection (phi3:mini vs mistral:7b)
-- TTS voice and speed
-- Wake word settings (Porcupine)
-- Safety confirmations
-- Performance tuning
-
-## 24/7 Autonomous Features
-
-- **Proactive Monitoring** - Checks system health, suggests actions
-- **Persistent Memory** - SQLite database stores all interactions
-- **Smart Suggestions** - Time-based (morning routine, end-of-day wrap-up)
-- **Auto-Organization** - Suggests file cleanup for old Downloads
-- **System Tray** - Always accessible, shows status
-- **P2P Sync** - Experimental multi-device sync via local network
-
-## Testing
-
-```bash
-pip install pytest
-pytest tests/ -v
-```
-
-## Project Structure
-
-```
-marketingkolabs/
-├── agent.py              # 24/7 autonomous agent entry point
-├── api_server.py        # Flask API + WebSocket server
-├── config.yaml          # All settings
-├── requirements.txt     # Dependencies
-├── agent_memory.db      # Persistent memory (auto-created)
-├── settings.json        # User settings (auto-created)
-├── core/
-│   ├── stt.py          # faster-whisper STT
-│   ├── intent_parser.py # Ollama LLM JSON parser
-│   ├── tts.py          # Piper TTS
-│   ├── skill_router.py # Plugin router
-│   ├── context.py      # Session state tracking
-│   ├── safety.py       # Action confirmations
-│   ├── memory.py       # Persistent SQLite memory
-│   ├── proactive.py    # 24/7 autonomous loop
-│   ├── p2p_sync.py     # Local network sync
-│   ├── tray_app.py     # System tray application
-│   └── autostart.py   # Cross-platform auto-start
-├── skills/
-│   ├── text_editor.py  # Text manipulation
-│   ├── file_ops.py     # File operations
-│   ├── app_control.py  # App control
-│   ├── clipboard.py    # Clipboard tasks
-│   ├── browser.py      # Browser automation
-│   ├── system.py       # Full system access
-│   └── macros.py      # Custom voice shortcuts
-├── ui/                 # Premium React UI
-│   ├── src/
-│   │   ├── App.js      # Main React component
-│   │   ├── components/
-│   │   │   ├── VoiceOrb.js
-│   │   │   ├── CommandBar.js
-│   │   │   ├── Settings.js
-│   │   │   └── StatusPanel.js
-│   │   └── hooks/
-│   └── package.json
-└── tests/
-    ├── test_context.py
-    ├── test_skills.py
-    └── test_safety.py
-```
-
-## License
-
-MIT License - See [LICENSE](LICENSE) file
-
-## Contributing
-
-Community contributions welcome!
-- Add new skills via pull requests
-- Improve voice recognition accuracy
-- Create browser automation scripts
-- Optimize for lower latency
-- Add multi-language support
-
-## Roadmap
-
-- [ ] Wake word training for custom phrases
-- [ ] Semantic search across browser tabs
-- [ ] Voice biometrics for user recognition
-- [ ] Mobile companion app
-- [ ] Docker deployment
-- [ ] Plugin marketplace
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python)](https://www.python.org/)
+[![Faster-Whisper](https://img.shields.io/badge/Speech_to_Text-Faster--Whisper-orange?style=flat-square)](https://github.com/SYSTRAN/faster-whisper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=flat-square)](#)
 
 ---
 
-**Built with ❤️ for local-first, privacy-focused AI automation**
+## Overview
+
+### The Problem It Solves
+Modern cloud-based AI assistants introduce noticeable network latency, recurring API costs, privacy concerns, and lack deep system-level integration. Users needing fast voice dictation, continuous background assistance, and desktop workflow automation are often forced to choose between sluggish cloud round-trips and stripped-down local tools.
+
+### Why It Was Built
+Developed at MarketingKo Labs, **Jarvis v1** was engineered as the open-source foundational research prototype behind **[SancharyaAI](https://sancharya.marketingko.in/)**. It operates 100% on-device with zero cloud reliance, delivering sub-2-second speech-to-text response times, persistent episodic memory, voice-to-clipboard insertion, and autonomous desktop task orchestration.
+
+---
+
+## Key Features
+
+- **Sub-2-Second Voice Response:** High-throughput local transcription powered by `faster-whisper` (Whisper Tiny / Base with INT8 quantization).
+- **24/7 Autonomous Background Operation:** Runs non-intrusively in the system tray, monitoring system state and proactive task triggers.
+- **Persistent Local Memory:** SQLite memory engine (`agent_memory.db`) and structured history logs (`jarvis_history.json`) that retain user preferences and context across restarts.
+- **Voice-to-Fill & Dictation:** Instant speech-to-clipboard and automated form/input field typing via `pyperclip` and keyboard hooks.
+- **Desktop & Web Research Automation:** Built-in research workflows capable of querying browsers, parsing web data, and extracting structured insights.
+- **Modular Plugin & Skill System:** Hot-reloadable skill architecture for extending system actions, shortcuts, and custom triggers.
+- **OS Autostart Daemons:** Production auto-launch scripts (`autostart.py`, `GO.bat`, `GO_FINAL.ps1`) for uninterrupted background persistence.
+
+---
+
+## Architecture Overview
+
+```
+                      ┌──────────────────────────────┐
+                      │    Microphone Audio Stream   │
+                      └──────────────┬───────────────┘
+                                     │ (sounddevice)
+                      ┌──────────────▼───────────────┐
+                      │     faster-whisper Engine    │
+                      │   (Local INT8 Quantization)  │
+                      └──────────────┬───────────────┘
+                                     │ Transcribed Text
+                      ┌──────────────▼───────────────┐
+                      │    Autonomous Agent Loop     │
+                      │  (Intent Classifier & Router)│
+                      └───┬──────────────────────┬───┘
+                          │                      │
+            ┌─────────────▼──────┐        ┌──────▼─────────────┐
+            │ Persistent Memory  │        │   Desktop Action   │
+            │  SQLite + History  │        │    Executor        │
+            └────────────────────┘        └──────┬─────────────┘
+                                                 │
+                               ┌─────────────────┼─────────────────┐
+                               │                 │                 │
+                        ┌──────▼──────┐   ┌──────▼──────┐   ┌──────▼──────┐
+                        │Voice-to-Fill│   │ Web Search  │   │   System    │
+                        │ (Clipboard) │   │ Automation  │   │  Shortcuts  │
+                        └─────────────┘   └─────────────┘   └─────────────┘
+```
+
+---
+
+## Tech Stack
+
+- **Core Runtime:** Python 3.9+
+- **Speech-to-Text (STT):** `faster-whisper` (CTranslate2 implementation of Whisper)
+- **Audio Capture & DSP:** `sounddevice`, `numpy`
+- **Memory & Storage:** SQLite (`agent_memory.db`), JSON data stores
+- **System Automation:** `pyperclip`, `pyautogui`, platform API bindings
+- **Configuration:** YAML (`config.yaml`), customizable hotkey dictionaries
+
+---
+
+## Repository Structure
+
+```
+├── agent.py                 # Core agent lifecycle and main event loop
+├── autonomous_agent.py      # Background autonomous scheduler and monitor
+├── api_server.py            # Local REST bridge for programmatic trigger ingestion
+├── autostart.py             # System boot configuration utility
+├── config.yaml              # Core audio thresholds, model sizes, and shortcuts
+├── jarvis.py                # Primary CLI and desktop entry point
+├── jarvis_flow.py           # Multi-step task execution workflow builder
+├── jarvis_shortcuts.py      # Hotkey capture and routing handlers
+├── agent_memory.db          # Persistent SQLite state database
+├── requirements.txt         # Complete dependency manifest
+└── GO.bat / GO_FINAL.ps1    # One-click Windows deployment scripts
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Python 3.9 or higher
+- Microphone input device
+- Virtual environment tool (`venv` or `uv`)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/KarthikeyaGSI/jarvis_v1.git
+cd jarvis_v1
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# On Linux/macOS:
+source venv/bin/activate
+```
+
+3. Install required packages:
+```bash
+pip install -r requirements.txt
+```
+
+4. Verify your microphone device:
+```bash
+python TEST_NOW.py
+```
+
+5. Launch the voice agent:
+```bash
+python jarvis.py
+```
+
+Or on Windows, launch directly using the runner script:
+```powershell
+.\GO_FINAL.ps1
+```
+
+---
+
+## Configuration (`config.yaml`)
+
+```yaml
+audio:
+  model_size: "tiny"       # options: tiny, base, small
+  sample_rate: 16000
+  silence_threshold: 0.015
+  silence_duration: 1.2    # seconds of silence before processing
+
+agent:
+  auto_copy: true          # automatically copy dictation to clipboard
+  autonomous_mode: true    # enable background task execution
+  log_level: "INFO"
+```
+
+---
+
+## Evolution to SancharyaAI
+
+Jarvis v1 represents the initial local desktop agent experiment created at MarketingKo Labs. The lessons learned in audio turn-taking, acoustic chunking, and intent classification laid the architectural groundwork for **[SancharyaAI](https://sancharya.marketingko.in/)**, an enterprise-grade cloud AI voice platform for telephony and outbound automation.
+
+---
+
+## License
+
+This project is open-source under the [MIT License](LICENSE).
+
+---
+
+## Author
+
+**Karthikeya Thallapally**  
+Founder, [MarketingKo](https://marketingko.in/) & [SancharyaAI](https://sancharya.marketingko.in/)  
+Twitter / X: [@thekarthgsi](https://twitter.com/thekarthgsi) · GitHub: [@KarthikeyaGSI](https://github.com/KarthikeyaGSI)
